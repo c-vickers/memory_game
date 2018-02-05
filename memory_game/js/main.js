@@ -1,5 +1,3 @@
-console.log("Up and running!");
-
 var cards = [
   {
     rank: "queen",
@@ -25,23 +23,34 @@ var cards = [
 
 var cardsInPlay = [];
 
+function reset(){
+  // clear out the board div
+  var board = document.getElementById("game-board");
+  while (board.hasChildNodes()) {
+    board.removeChild(board.firstChild);
+  }
+  // clear out cardsInPlay
+  cardsInPlay = [];
+  // reset the board
+  createBoard();
+}
+
 function checkForMatch(){
   if (cardsInPlay[0] === cardsInPlay[1]){
     alert("You found a match");
+    reset();
   } else {
     alert("Sorry, try again");
+    reset();
   }
 }
 
 function flipCard (){
   var cardId = this.getAttribute("data-id");
-  console.log("User flipped " + cards[cardId].rank);
   cardsInPlay.push(cards[cardId].rank);
-  console.log(cards[cardId].cardImage);
-  console.log(cards[cardId].suit);
   this.setAttribute("src", cards[cardId].cardImage);
   if (cardsInPlay.length == 2) {
-    checkForMatch();
+    setTimeout(checkForMatch, 100);
   }
 }
 
